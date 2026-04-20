@@ -20,9 +20,9 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col relative overflow-hidden bg-white">
+    <div className="h-[100dvh] flex flex-col relative overflow-hidden bg-white">
       {/* Blue Header */}
-      <header className="bg-[#1E3A8A] px-6 py-4 flex justify-between items-center z-50 shadow-md">
+      <header className="bg-[#1E3A8A] px-4 sm:px-6 py-3.5 sm:py-4 flex justify-between items-center z-50 shadow-md">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
             <span className="text-white font-black text-lg">D</span>
@@ -38,9 +38,9 @@ export const Home: React.FC = () => {
       </header>
 
       {/* Geolocation Bar */}
-      <div className="bg-[#2563EB] px-6 py-2.5 flex items-center gap-2 z-40 border-t border-blue-400/30">
+      <div className="bg-[#2563EB] px-4 sm:px-6 py-2.5 flex items-center gap-2 z-40 border-t border-blue-400/30">
         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-        <span className="text-[10px] font-bold text-white uppercase tracking-widest">Алматы, GPS қосулы</span>
+        <span className="text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-widest">Алматы, GPS қосулы</span>
       </div>
 
       {/* Map Content */}
@@ -52,7 +52,7 @@ export const Home: React.FC = () => {
           <motion.div 
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="absolute bottom-6 left-4 right-4 z-50"
+            className="absolute bottom-[calc(5.5rem+env(safe-area-inset-bottom))] sm:bottom-24 left-3 sm:left-4 right-3 sm:right-4 z-50"
           >
             <div className="ios-card overflow-hidden">
               <div className="bg-[#DC2626] px-4 py-2 flex items-center justify-between">

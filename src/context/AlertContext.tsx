@@ -22,7 +22,15 @@ export const AlertProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const savedReports = localStorage.getItem('dereu_reports');
     
     if (savedAlerts) {
-      setAlerts(JSON.parse(savedAlerts));
+      const parsedAlerts = JSON.parse(savedAlerts) as Alert[];
+      // Keep user data but backfill a large seed if old storage had too few incidents.
+      if (parsedAlerts.length < 200) {
+        const merged = [...parsedAlerts, ...MOCK_ALERTS.filter((mock) => !parsedAlerts.some((existing) => existing.id === mock.id))];
+        setAlerts(merged);
+        localStorage.setItem('dereu_alerts', JSON.stringify(merged));
+      } else {
+        setAlerts(parsedAlerts);
+      }
     } else {
       setAlerts(MOCK_ALERTS);
       localStorage.setItem('dereu_alerts', JSON.stringify(MOCK_ALERTS));

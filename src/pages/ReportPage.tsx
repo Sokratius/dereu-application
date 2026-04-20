@@ -3,7 +3,6 @@ import { Camera, MapPin, Send, Loader2, CheckCircle2, ChevronLeft, Calendar, Inf
 import { motion } from 'motion/react';
 import { useAlerts } from '../context/AlertContext';
 import { useAuth } from '../context/AuthContext';
-import { useNotifications } from '../hooks/useNotifications';
 import { useNavigate } from 'react-router-dom';
 import { MapComponent } from '../components/MapComponent';
 
@@ -11,7 +10,6 @@ export const ReportPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { alerts, addReport } = useAlerts();
-  const { sendNotification } = useNotifications();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   
@@ -43,10 +41,6 @@ export const ReportPage: React.FC = () => {
 
     setIsSubmitting(false);
     setIsSuccess(true);
-    
-    setTimeout(() => {
-      sendNotification('DEREU', 'Ақпарат сәтті жіберілді!', '/');
-    }, 1000);
   };
 
   if (isSuccess) {

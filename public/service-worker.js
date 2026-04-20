@@ -26,7 +26,7 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: data.body,
-    icon: 'https://picsum.photos/seed/dereu/192/192',
+    icon: '/icon.svg',
     vibrate: [200, 100, 200],
     data: {
       url: data.url || '/'

@@ -13,7 +13,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, showNav = true }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center">
+      <div className="min-h-[100dvh] bg-[#F3F4F6] flex items-center justify-center">
         <div className="w-10 h-10 border-2 border-[#E5E7EB] border-t-[#2563EB] rounded-full animate-spin"></div>
       </div>
     );
@@ -24,8 +24,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, showNav = true }
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col items-center">
-      <main className="w-full max-w-md bg-white min-h-screen shadow-xl relative pb-20 overflow-x-hidden border-x border-[#E5E7EB]">
+    <div className="min-h-[100dvh] bg-[#F3F4F6] flex flex-col items-center">
+      <main className="w-full max-w-[430px] bg-white min-h-[100dvh] shadow-xl relative pb-24 overflow-x-hidden sm:border-x border-[#E5E7EB]">
         {children}
       </main>
       {showNav && <Navigation />}

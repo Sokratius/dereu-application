@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Alert } from '../types';
 import { Link } from 'react-router-dom';
+import { KazakhstanCity } from '../lib/kazakhstanCities';
 
 // Fix Leaflet icon issue by using CDN URLs for icons
 const DefaultIcon = L.icon({
@@ -20,10 +21,16 @@ interface MapComponentProps {
   center?: [number, number];
   zoom?: number;
   highlightAlertId?: string | null;
+  cities?: KazakhstanCity[];
 }
 
-const SetViewOnClick = ({ animate }: { animate: boolean }) => {
+const SetView = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
   const map = useMap();
+
+  useEffect(() => {
+    map.setView(center, zoom, { animate: true });
+  }, [center, map, zoom]);
+
   return null;
 };
 
@@ -31,7 +38,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   alerts, 
   center = [43.238949, 76.889709], // Default Almaty
   zoom = 13,
-  highlightAlertId
+  highlightAlertId,
+  cities = []
 }) => {
   const typeColors = {
     missing_person: '#2563EB', // blue-600
@@ -48,10 +56,27 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         className="w-full h-full"
         zoomControl={false}
       >
+        <SetView center={center} zoom={zoom} />
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {cities.map((city) => (
+          <Marker
+            key={city.name}
+            position={city.coordinates}
+            icon={L.divIcon({
+              className: 'city-marker',
+              html: '<div class="w-3 h-3 rounded-full bg-[#1E3A8A]/80 border border-white shadow-md"></div>',
+              iconSize: [12, 12],
+              iconAnchor: [6, 6],
+            })}
+          >
+            <Popup>{city.name}</Popup>
+          </Marker>
+        ))}
         
         {alerts.map((alert) => (
           <React.Fragment key={alert.id}>
@@ -69,7 +94,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
               })}
             >
               <Popup className="rounded-2xl overflow-hidden p-0 shadow-2xl">
-                <div className="p-3 min-w-[200px] bg-white">
+                <div className="p-3 min-w-50 bg-white">
                   <div className="relative mb-3">
                     <img 
                       src={alert.photoUrl} 
